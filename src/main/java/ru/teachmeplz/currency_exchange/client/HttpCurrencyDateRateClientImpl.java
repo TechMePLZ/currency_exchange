@@ -1,8 +1,9 @@
 package ru.teachmeplz.currency_exchange.client;
 
-import com.sun.tools.rngom.util.Uri;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
+import ru.teachmeplz.currency_exchange.config.CurrencyClientCfg;
 
 import java.io.IOException;
 import java.net.URI;
@@ -20,7 +21,13 @@ public class HttpCurrencyDateRateClientImpl implements HttpCurrencyDateRateClien
      */
     private static final String DATE_PATTERN = "dd/MM/yyyy";
 
+    private  final CurrencyClientCfg clientCfg;
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_PATTERN);
+
+    @Autowired
+    public HttpCurrencyDateRateClientImpl(CurrencyClientCfg clientCfg) {
+        this.clientCfg = clientCfg;
+    }
 
     /**
      * Создаем URL запроса, используя HTTP реквест
@@ -29,7 +36,7 @@ public class HttpCurrencyDateRateClientImpl implements HttpCurrencyDateRateClien
      */
     @Override
     public String requestByDateRate(LocalDate date) {
-        String baseUrl = "https://cbr.ru/scripts/XML_daily.asp";
+        String baseUrl = clientCfg.getUrl();   ;
         HttpClient client = HttpClient.newHttpClient();
         String url = BuildUriRequest(baseUrl, date);
         /**

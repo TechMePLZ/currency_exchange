@@ -4,6 +4,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.NumberUtils;
 import ru.teachmeplz.currency_exchange.client.HttpCurrencyDateRateClient;
 import ru.teachmeplz.currency_exchange.schema.ValCurs;
 
@@ -11,6 +12,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import java.io.StringReader;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -61,10 +64,14 @@ public class CbrService {
     }
 
     private BigDecimal parseWithLocale(String value) {
-        double c = Double.parseDouble(value);
-        return BigDecimal.valueOf(c);
+        double r = 0;
+        try {
+            r = (double) NumberFormat.getInstance().parse(value);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return BigDecimal.valueOf(r);
     }
-
     /**
      * @param xml
      * @return демаршализованый POJO, используя JAXBContext и StringReader
