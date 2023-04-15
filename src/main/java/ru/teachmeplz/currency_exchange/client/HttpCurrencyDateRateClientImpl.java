@@ -49,9 +49,7 @@ public class HttpCurrencyDateRateClientImpl implements HttpCurrencyDateRateClien
             HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
             HttpResponse<String> send =client.send(request,HttpResponse.BodyHandlers.ofString());
             return send.body();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
