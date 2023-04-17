@@ -119,7 +119,7 @@
                     <sources>
                         <source>src/main/resources/xsd/ValCurs.xsd</source>
                     </sources>
-                    <outputDirectory>${basedir}/src/main/java</outputDirectory>
+                    <outputDirectory>src/main/java</outputDirectory>
                     <clearOutputDir>false</clearOutputDir>
                     <packageName>ru.teachmeplz.currency_exchange.schema</packageName>
                     <noGeneratedHeaderComments>true</noGeneratedHeaderComments>
